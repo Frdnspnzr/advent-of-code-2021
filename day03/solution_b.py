@@ -19,13 +19,13 @@ co2_scrubber = list(readings)
 pos = 0
 while len(o2_generator) > 1:
     o2_generator = filter_readings(o2_generator, pos, "1" if count_ones_in_position(
-        o2_generator, pos) >= len(readings) / 2 else "0")
+        o2_generator, pos) >= len(o2_generator) / 2 else "0")
     pos += 1
 
 pos = 0
 while len(co2_scrubber) > 1:
     co2_scrubber = filter_readings(co2_scrubber, pos, "0" if count_ones_in_position(
-        co2_scrubber, pos) >= len(readings) / 2 else "1")
+        co2_scrubber, pos) >= len(co2_scrubber) / 2 else "1")
     pos += 1
 
 print("O2 Generator: ", int(o2_generator[0], 2))
