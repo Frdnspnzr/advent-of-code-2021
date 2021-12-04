@@ -2,6 +2,7 @@ class Card(object):
     def __init__(self):
         self.fields = []
         self.bingo = False
+        self.winning_call = -1
         for i in range (0, 5):
             self.fields.append([])
             for j in range(0, 5):
@@ -30,7 +31,7 @@ cards = []
 calls = []
 cards = []
 
-with open('day04/input.txt', 'r+') as file:
+with open('input.txt', 'r+') as file:
     lines = file.readlines()
     calls = list(map(lambda i: int(i), str.split(lines[0], ",")))
     c = 2
@@ -42,6 +43,8 @@ with open('day04/input.txt', 'r+') as file:
         cards.append(card)
         c += 6
 
+winners = []
+
 for call in calls:
     for card in cards:
         for row in card.fields:
@@ -49,12 +52,15 @@ for call in calls:
                 if field.number == call:
                     field.marked = True
         card.bingo = check_for_bingo(card)
-    not_winners = list(filter(lambda c: not c.bingo, cards))
-    if len(not_winners) == 1:
-        s = 0
-        for row in not_winners[0].fields:
-            for field in row:
-                if not field.marked:
-                    s += field.number
-        print(s * call)
-        quit()
+        if card.bingo:
+            card.winning_call = call
+            winners.append(card)
+    cards = list(filter(lambda c: not c.bingo, cards))
+
+s = 0
+for row in winners[len(winners)-1].fields:
+    for field in row:
+        if not field.marked:
+            s += field.number
+
+print(s * winners[len(winners)-1].winning_call)
