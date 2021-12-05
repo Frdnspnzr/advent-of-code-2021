@@ -27,8 +27,12 @@ for x in range(highest_y+1):
 
 
 for line in lines:
-    for x in range(line.start.x, line.end.x+1):
-        for y in range(line.start.y, line.end.y+1):
+    start_x = min(line.start.x, line.end.x)
+    start_y = min(line.start.y, line.end.y)
+    end_x = max(line.start.x, line.end.x)
+    end_y = max(line.start.y, line.end.y)
+    for x in range(start_x, end_x+1):
+        for y in range(start_y, end_y+1):
             count[y][x] += 1
 
 dangerous = 0
